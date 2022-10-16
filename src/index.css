@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .calculator-button {
+    @apply hover:bg-gray-100
+       p-4
+       border
+       rounded
+       shadow
+       text-2xl;
+  }
+}

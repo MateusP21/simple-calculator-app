@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 function App() {
   const [currentOperator, setCurrentOperator] = useState(null);
-  const [calculationValue, setCalculationValue] = useState('0');
-  const [firstValue, setFirstValue] = useState('');
-  const [secondValue, setSecondValue] = useState('');
+  const [calculationValue, setCalculationValue] = useState('');
+  const [calculator, setCalculator] = useState({
+    firstValue: '',
+    secondValue: '',
+  });
 
   const operations = {
     '+': (first, second) => first + second,
@@ -12,27 +14,50 @@ function App() {
     x: (first, second) => first * second,
   };
 
-  const handleCalculationValue = (value) => {
+  useEffect(() => {
     if (currentOperator === null) {
-      setFirstValue(value);
+      setCalculationValue(calculator.firstValue);
     } else {
-      setSecondValue(value);
+      setCalculationValue(calculator.secondValue);
     }
+  }, [calculator.firstValue, calculator.secondValue]);
+
+  const handleCalculationValue = (newValue) => {
+    currentOperator === null
+      ? setCalculator((prevState) => {
+          return {
+            ...prevState,
+            firstValue: prevState.firstValue.concat(newValue),
+          };
+        })
+      : setCalculator((prevState) => {
+          return {
+            ...prevState,
+            secondValue: prevState.secondValue.concat(newValue),
+          };
+        });
   };
 
   const calculate = () => {
     const result = operations[currentOperator](
-      Number(firstValue),
-      Number(secondValue)
+      Number(calculator.firstValue),
+      Number(calculator.secondValue)
     );
     setCalculationValue(result);
   };
   return (
     <main className="container mx-auto p-4 flex items-center justify-center h-screen">
-      <section className="border rounded shadow-md bg-white">
+      <section className="border rounded shadow-md bg-white max-w-xs">
         <div className="p-4 py-6 text-right border-b">
           <p className="text-sm text-gray-400 pb-4">5 {currentOperator} 5</p>
-          <h1 className="text-7xl">{calculationValue}</h1>
+          <div className="flex">
+            <input
+              placeholder="0"
+              disabled
+              value={calculationValue}
+              className="text-7xl overflow-hidden bg-transparent placeholder:text-right text-right"
+            ></input>
+          </div>
         </div>
         <div className="p-4 grid grid-cols-4 gap-4">
           <button className="calculator-button">AC</button>

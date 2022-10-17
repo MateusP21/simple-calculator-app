@@ -7,11 +7,11 @@
     background-color: #faf9f9;
   }
   .calculator-button {
-    @apply hover:bg-gray-100
-       p-4
+    @apply p-4
        border
        rounded
-       shadow
+       transition-shadow
+       hover:shadow
        text-2xl;
   }
 }

@@ -11,16 +11,27 @@ function App() {
     '+': (first, second) => first + second,
     '-': (first, second) => first - second,
     '/': (first, second) => first / second,
-    x: (first, second) => first * second,
+    X: (first, second) => first * second,
   };
 
   useEffect(() => {
     if (currentOperator === null) {
       setCalculationValue(calculator.firstValue);
-    } else {
+    }
+  }, [calculator.firstValue]);
+
+  useEffect(() => {
+    if (currentOperator !== null) {
       setCalculationValue(calculator.secondValue);
     }
-  }, [calculator.firstValue, calculator.secondValue]);
+  }, [calculator.secondValue]);
+
+  const handleCurrentOperator = (operator) => {
+    if (operator !== currentOperator) {
+      setCalculator((prevState) => ({ ...prevState, secondValue: '' }));
+    }
+    setCurrentOperator(operator);
+  };
 
   const handleCalculationValue = (newValue) => {
     currentOperator === null
@@ -44,12 +55,17 @@ function App() {
       Number(calculator.secondValue)
     );
     setCalculationValue(result);
+    setCalculator((prevState) => ({ ...prevState, firstValue: result }));
   };
   return (
     <main className="container mx-auto p-4 flex items-center justify-center h-screen">
       <section className="border rounded shadow-md bg-white max-w-xs">
         <div className="p-4 py-6 text-right border-b">
-          <p className="text-sm text-gray-400 pb-4">5 {currentOperator} 5</p>
+          <p className="text-sm text-gray-400 pb-4">
+            {`${calculator.firstValue} ${
+              currentOperator === null ? '' : currentOperator
+            } ${calculator.secondValue}`}
+          </p>
           <div className="flex">
             <input
               placeholder="0"
@@ -65,7 +81,7 @@ function App() {
           <button className="calculator-button">%</button>
           <button
             onClick={({ currentTarget }) =>
-              setCurrentOperator(currentTarget.innerText)
+              handleCurrentOperator(currentTarget.innerText)
             }
             className="calculator-button"
           >
@@ -98,7 +114,7 @@ function App() {
           </button>
           <button
             onClick={({ currentTarget }) =>
-              handleCalculationValue(currentTarget.innerText)
+              handleCurrentOperator(currentTarget.innerText)
             }
             className="calculator-button"
           >
@@ -130,7 +146,7 @@ function App() {
           </button>
           <button
             onClick={({ currentTarget }) =>
-              setCurrentOperator(currentTarget.innerText)
+              handleCurrentOperator(currentTarget.innerText)
             }
             className="calculator-button"
           >
@@ -162,7 +178,7 @@ function App() {
           </button>
           <button
             onClick={({ currentTarget }) =>
-              setCurrentOperator(currentTarget.innerText)
+              handleCurrentOperator(currentTarget.innerText)
             }
             className="calculator-button"
           >

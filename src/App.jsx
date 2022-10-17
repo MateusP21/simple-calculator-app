@@ -202,7 +202,12 @@ function App() {
           >
             0
           </button>
-          <button className="calculator-button">,</button>
+          <button
+            onClick={() => handleCalculationValue('.')}
+            className="calculator-button"
+          >
+            ,
+          </button>
           <button onClick={() => calculate()} className="calculator-button">
             =
           </button>

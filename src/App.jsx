@@ -33,6 +33,11 @@ function App() {
     setCurrentOperator(operator);
   };
 
+  const resetCalculator = () => {
+    setCurrentOperator(null);
+    setCalculator((prevState) => ({ firstValue: '', secondValue: '' }));
+  };
+
   const handleCalculationValue = (newValue) => {
     currentOperator === null
       ? setCalculator((prevState) => {
@@ -62,7 +67,7 @@ function App() {
       <section className="border rounded shadow-md bg-white max-w-xs">
         <div className="p-4 py-6 text-right border-b">
           <p className="text-sm text-gray-400 pb-4">
-            {`${calculator.firstValue} ${
+            {`${calculator.firstValue === '' ? '0' : calculator.firstValue} ${
               currentOperator === null ? '' : currentOperator
             } ${calculator.secondValue}`}
           </p>
@@ -76,7 +81,12 @@ function App() {
           </div>
         </div>
         <div className="p-4 grid grid-cols-4 gap-4">
-          <button className="calculator-button">AC</button>
+          <button
+            onClick={() => resetCalculator()}
+            className="calculator-button"
+          >
+            AC
+          </button>
           <button className="calculator-button">+/-</button>
           <button className="calculator-button">%</button>
           <button

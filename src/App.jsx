@@ -35,7 +35,7 @@ function App() {
 
   const resetCalculator = () => {
     setCurrentOperator(null);
-    setCalculator((prevState) => ({ firstValue: '', secondValue: '' }));
+    setCalculator({ firstValue: '', secondValue: '' });
   };
 
   const handleCalculationValue = (newValue) => {

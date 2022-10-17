@@ -1,7 +1,7 @@
 function App() {
   return (
     <main className="container mx-auto p-4 flex items-center justify-center h-screen">
-      <section className="border rounded shadow-md">
+      <section className="border rounded shadow-md bg-white">
         <div className="p-4 py-6 text-right border-b">
           <p className="text-sm text-gray-400 pb-4">5 + 5</p>
           <h1 className="text-7xl">10</h1>

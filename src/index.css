@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+  body {
+    background-color: #faf9f9;
+  }
   .calculator-button {
     @apply hover:bg-gray-100
        p-4

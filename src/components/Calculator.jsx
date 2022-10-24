@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { DarkModeToggle } from 'react-dark-mode-toggle-2';
+import toast from 'react-hot-toast';
 export default function Calculator({ colorTheme, setColorTheme }) {
   const [currentOperator, setCurrentOperator] = useState(null);
+  const [lastCalculation, setLastCalculation] = useState('0');
   const [calculator, setCalculator] = useState({
     firstValue: '',
     secondValue: '',
@@ -24,6 +26,7 @@ export default function Calculator({ colorTheme, setColorTheme }) {
   const resetCalculator = () => {
     setCurrentOperator(null);
     setCalculator({ firstValue: '', secondValue: '' });
+    setLastCalculation('0');
   };
 
   const handleCalculationValue = (newValue) => {
@@ -43,6 +46,10 @@ export default function Calculator({ colorTheme, setColorTheme }) {
   };
 
   const calculate = () => {
+    if (currentOperator === null) {
+      toast.error('Operador não selecionado 😔');
+    }
+
     const result = operations[currentOperator](
       Number(calculator.firstValue),
       Number(calculator.secondValue)
@@ -53,6 +60,9 @@ export default function Calculator({ colorTheme, setColorTheme }) {
       firstValue: result,
       secondValue: '',
     }));
+    setLastCalculation(
+      `${calculator.firstValue} ${currentOperator} ${calculator.secondValue} = `
+    );
     setCurrentOperator(null);
   };
   return (
@@ -66,11 +76,7 @@ export default function Calculator({ colorTheme, setColorTheme }) {
         }
       />
       <div className="p-4 py-6 text-right border-b dark:border-slate-600">
-        <p className="text-sm text-gray-400 pb-4">
-          {`${calculator.firstValue === '' ? '0' : calculator.firstValue} ${
-            currentOperator === null ? '' : currentOperator
-          } ${calculator.secondValue}`}
-        </p>
+        <p className="text-sm text-gray-400 pb-4">{lastCalculation} </p>
         <div className="flex">
           <h2
             placeholder="0"

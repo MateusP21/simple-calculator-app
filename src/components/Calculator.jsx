@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { DarkModeToggle } from 'react-dark-mode-toggle-2';
 export default function Calculator({ colorTheme, setColorTheme }) {
   const [currentOperator, setCurrentOperator] = useState(null);
-
-  const [calculationValue, setCalculationValue] = useState('');
   const [calculator, setCalculator] = useState({
     firstValue: '',
     secondValue: '',
@@ -15,18 +13,6 @@ export default function Calculator({ colorTheme, setColorTheme }) {
     '/': (first, second) => first / second,
     X: (first, second) => first * second,
   };
-
-  // useEffect(() => {
-  //   if (currentOperator === null) {
-  //     setCalculationValue(calculator.firstValue);
-  //   }
-  // }, [calculator.firstValue]);
-
-  // useEffect(() => {
-  //   if (currentOperator !== null) {
-  //     setCalculationValue(calculator.secondValue);
-  //   }
-  // }, [calculator.secondValue]);
 
   const handleCurrentOperator = (operator) => {
     if (operator !== currentOperator) {
@@ -45,13 +31,13 @@ export default function Calculator({ colorTheme, setColorTheme }) {
       ? setCalculator((prevState) => {
           return {
             ...prevState,
-            firstValue: prevState.firstValue.concat(newValue),
+            firstValue: prevState.firstValue + newValue,
           };
         })
       : setCalculator((prevState) => {
           return {
             ...prevState,
-            secondValue: prevState.secondValue.concat(newValue),
+            secondValue: prevState.secondValue + newValue,
           };
         });
   };
@@ -61,7 +47,7 @@ export default function Calculator({ colorTheme, setColorTheme }) {
       Number(calculator.firstValue),
       Number(calculator.secondValue)
     );
-    setCalculationValue(result);
+
     setCalculator((prevState) => ({
       ...prevState,
       firstValue: result,
@@ -90,7 +76,7 @@ export default function Calculator({ colorTheme, setColorTheme }) {
             placeholder="0"
             disabled
             value={calculator.firstValue}
-            className="text-6xl w-full  dark:text-slate-50 bg-transparent text-right"
+            className="text-5xl w-full  dark:text-slate-50 bg-transparent text-right"
           >
             {`${calculator.firstValue === '' ? '0' : calculator.firstValue} ${
               currentOperator === null ? '' : currentOperator

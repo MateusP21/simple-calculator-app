@@ -16,17 +16,17 @@ export default function Calculator({ colorTheme, setColorTheme }) {
     X: (first, second) => first * second,
   };
 
-  useEffect(() => {
-    if (currentOperator === null) {
-      setCalculationValue(calculator.firstValue);
-    }
-  }, [calculator.firstValue]);
+  // useEffect(() => {
+  //   if (currentOperator === null) {
+  //     setCalculationValue(calculator.firstValue);
+  //   }
+  // }, [calculator.firstValue]);
 
-  useEffect(() => {
-    if (currentOperator !== null) {
-      setCalculationValue(calculator.secondValue);
-    }
-  }, [calculator.secondValue]);
+  // useEffect(() => {
+  //   if (currentOperator !== null) {
+  //     setCalculationValue(calculator.secondValue);
+  //   }
+  // }, [calculator.secondValue]);
 
   const handleCurrentOperator = (operator) => {
     if (operator !== currentOperator) {
@@ -62,7 +62,12 @@ export default function Calculator({ colorTheme, setColorTheme }) {
       Number(calculator.secondValue)
     );
     setCalculationValue(result);
-    setCalculator((prevState) => ({ ...prevState, firstValue: result }));
+    setCalculator((prevState) => ({
+      ...prevState,
+      firstValue: result,
+      secondValue: '',
+    }));
+    setCurrentOperator(null);
   };
   return (
     <section className="border dark:border-slate-600 flex flex-col rounded shadow-md bg-white dark:bg-slate-900 max-w-xs">
@@ -81,12 +86,16 @@ export default function Calculator({ colorTheme, setColorTheme }) {
           } ${calculator.secondValue}`}
         </p>
         <div className="flex">
-          <input
+          <h2
             placeholder="0"
             disabled
-            value={calculationValue}
-            className="text-6xl overflow-hidden dark:text-slate-50 bg-transparent placeholder:text-right text-right"
-          ></input>
+            value={calculator.firstValue}
+            className="text-6xl w-full  dark:text-slate-50 bg-transparent text-right"
+          >
+            {`${calculator.firstValue === '' ? '0' : calculator.firstValue} ${
+              currentOperator === null ? '' : currentOperator
+            } ${calculator.secondValue}`}
+          </h2>
         </div>
       </div>
       <div className="p-4 grid grid-cols-4 gap-4">

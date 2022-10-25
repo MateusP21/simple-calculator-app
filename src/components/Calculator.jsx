@@ -78,16 +78,13 @@ export default function Calculator({ colorTheme, setColorTheme }) {
       <div className="p-4 py-6 text-right border-b dark:border-slate-600">
         <p className="text-sm text-gray-400 pb-4">{lastCalculation} </p>
         <div className="flex">
-          <h2
-            placeholder="0"
-            disabled
-            value={calculator.firstValue}
-            className="text-5xl w-full  dark:text-slate-50 bg-transparent text-right"
-          >
-            {`${calculator.firstValue === '' ? '0' : calculator.firstValue} ${
-              currentOperator === null ? '' : currentOperator
-            } ${calculator.secondValue}`}
-          </h2>
+          <div className="text-5xl w-full flex items-end justify-end dark:text-slate-50 bg-transparent text-right">
+            <h2>
+              {calculator.firstValue === '' ? '0' : calculator.firstValue}
+            </h2>
+            <h2>{currentOperator === null ? '' : currentOperator}</h2>
+            <h2>{calculator.secondValue}</h2>
+          </div>
         </div>
       </div>
       <div className="p-4 grid grid-cols-4 gap-4">

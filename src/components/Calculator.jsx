@@ -29,6 +29,13 @@ export default function Calculator({ colorTheme, setColorTheme }) {
     setLastCalculation('0');
   };
 
+  const invertSignal = () => {
+    setCalculator((prevState) => ({
+      ...prevState,
+      firstValue: prevState.firstValue - prevState.firstValue * 2,
+    }));
+  };
+
   const handleCalculationValue = (newValue) => {
     currentOperator === null
       ? setCalculator((prevState) => {
@@ -91,7 +98,9 @@ export default function Calculator({ colorTheme, setColorTheme }) {
         <button onClick={() => resetCalculator()} className="calculator-button">
           AC
         </button>
-        <button className="calculator-button">+/-</button>
+        <button onClick={() => invertSignal()} className="calculator-button">
+          +/-
+        </button>
         <button className="calculator-button">%</button>
         <button
           onClick={({ currentTarget }) =>
